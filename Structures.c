@@ -1,4 +1,4 @@
-  #include <stdio.h>
+#include <stdio.h>
 
 struct alumno {
     char nombre[40];
@@ -19,5 +19,17 @@ int main() {
         puts("Ingrese su direccion: \n");
         scanf("%s", alumnos[i].direccion);
         fflush(stdin);
-        }
+
+        puts("Ingrese carrera: \n");
+        scanf("%s", alumnos[i].carrera);
+        fflush(stdin);
+
+        puts("Ingrese tu edad: \n");
+        scanf("%d", &alumnos[i].edad);
+        fflush(stdin);
+
+        puts("Ingrese su promedio: \n");
+        scanf("%f", &alumnos[i].promedio);
+        fflush(stdin);
+    }
 }
