@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+//Definicion de Struct alumno.
 struct alumno {
     char nombre[40];
     char direccion[50];
@@ -7,10 +7,10 @@ struct alumno {
     int edad;
     float promedio;
 };
-
+//Inicio de Programa main.
 int main() {
     struct alumno alumnos[5] = {};
-
+//Funcion for para iterar hasta 5 el nombre,ladireccion,carrera,edad y promedio de cada alumno.
     for (int i = 0; i < 5; i++) {
         puts("Ingrese su nombre: \n");
         scanf("%s", alumnos[i].nombre);
@@ -32,7 +32,7 @@ int main() {
         scanf("%f", &alumnos[i].promedio);
         fflush(stdin);
     }
-
+//Funcion for para impirmir cada uno de los datos obtenidos de los estudiantes.
     for (int i = 0; i < 5; i++) {
         printf("El nombre %d es: %s\n\n", i + 1, alumnos[i].nombre);
         printf("La direccion %d es: %s\n\n", i + 1, alumnos[i].direccion);
