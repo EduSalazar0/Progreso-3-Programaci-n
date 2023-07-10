@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define MAX_ESTUDIANTES 5
-
+//Definicion de Struct estudiantes, con sus respectivas variables.
 typedef struct {
     int codigo;
     char nombre[50];
@@ -13,18 +13,20 @@ typedef struct {
     float nota3;
     float promedio;
 } Estudiante;
+
 //Definicion de funciones ordenar estudiantes e imprimir estudiantes.
 void ordenarEstudiantes(Estudiante estudiantes[], int numEstudiantes);
 void imprimirEstudiantes(Estudiante estudiantes[], int numEstudiantes);
 
+//Inicio del codigo.
 int main() {
-    FILE *archivoEntrada, *archivoSalida;
-    char linea[100];
-    Estudiante estudiantes[MAX_ESTUDIANTES];
+    FILE *archivoEntrada, *archivoSalida; // se llaman a dos punteros que van a utilizarse para ejecturar o imprimir los datos de un texto, entrada y salida.
+    char linea[100]; // Definicion de variable char linea con tamaño 100 para recoletar datos.
+    Estudiante estudiantes[MAX_ESTUDIANTES]; // Se define el struct con array del max de estudiantes que es 5.
     int numEstudiantes = 0;
 
-    archivoEntrada = fopen("datos.txt", "r");
-    if (archivoEntrada == NULL) {
+    archivoEntrada = fopen("datos.txt", "r"); // SE abre el archivo que descargamos en modo lectura.
+    if (archivoEntrada == NULL) { // Comprobacion para saber si el archivo se abrio de manera correcta o incorrecta.
         printf("No se pudo abrir el archivo de entrada.\n");
         return 1;
     }
@@ -32,7 +34,7 @@ int main() {
     printf("El archivo se abrio correctamente\n");
   }
 
-    while (fgets(linea, sizeof(linea), archivoEntrada) != NULL) {
+    while (fgets(linea, sizeof(linea), archivoEntrada) != NULL) { // Funcion while para scanear espacio por espacio los datos alojados en alumnos.txt
         Estudiante estudiante;
         fscanf(linea, "%d;%[^;];%[^;];%f;%f;%f", &estudiante.codigo, estudiante.nombre, estudiante.carrera, &estudiante.nota1, &estudiante.nota2, &estudiante.nota3);
 
@@ -42,28 +44,29 @@ int main() {
         estudiantes[numEstudiantes] = estudiante;
         numEstudiantes++;
     }
-    fclose(archivoEntrada);
+    fclose(archivoEntrada); // Se cierra el FILE archivos de entrada.
 
-ordenarEstudiantes(estudiantes, numEstudiantes);
+ordenarEstudiantes(estudiantes, numEstudiantes); // Se llama a la funcion ordenarEstudiantes, definida mas adelante.
 
-    archivoSalida = fopen("datos_ordenados.txt", "w");
+    archivoSalida = fopen("datos_ordenados.txt", "w"); // Se abre el otro FILE apuntado a archivos de Salida en modo escritura.
     if (archivoSalida == NULL) {
-        printf("No se pudo abrir el archivo de salida.\n");
+        printf("No se pudo abrir el archivo de salida.\n");  // Se comprueba que se abra de manera correcta.
         return 1;
     }
 
-    imprimirEstudiantes(estudiantes, numEstudiantes);
+    imprimirEstudiantes(estudiantes, numEstudiantes); // Se llama la funcion impirmir Estudiantes Definida mas adelante.
 
-    for (int i = 0; i < numEstudiantes; i++) {
+    for (int i = 0; i < numEstudiantes; i++) { // Bucle for encargado de impirmir los datos Estudiantes.
         fprintf(archivoSalida, "%s;%s;%.2f;%.2f;%.2f;%.2f\n", estudiantes[i].nombre, estudiantes[i].carrera, estudiantes[i].nota1, estudiantes[i].nota2, estudiantes[i].nota3, estudiantes[i].promedio);
     }
 
-    fclose(archivoSalida);
-
+    fclose(archivoSalida); // Se cierra el FILE que apunta archivo salida.
 
     return 0;
-}
+} // Fin del Programa.
+
 //Definicion funcion de tipo void ordenar Estudiantes.
+//Lo que se hace en esta funcion ordenar Estudiantes es con este doble bucle for es iterar entre el numero de estudiantes con la finalidad de que en una variable temp se guarde el nuevo puesto o codigo de numero del estudiante.
 void ordenarEstudiantes(Estudiante estudiantes[], int numEstudiantes) {
     for (int i = 0; i < numEstudiantes - 1; i++) {
         for (int j = i + 1; j < numEstudiantes; j++) {
@@ -75,5 +78,6 @@ void ordenarEstudiantes(Estudiante estudiantes[], int numEstudiantes) {
         }
     }
 }
-//Lo que se hace en esta funcion ordenar Estudiantes es con este doble bucle for es iterar entre el numero de estudiantes con la finalidad de que en una variable temp se guarde el nuevo puesto o codigo de numero del estudiante.
+
+
     
