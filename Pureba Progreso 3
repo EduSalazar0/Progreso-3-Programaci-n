@@ -42,3 +42,26 @@ int main() {
         estudiantes[numEstudiantes] = estudiante;
         numEstudiantes++;
     }
+    fclose(archivoEntrada);
+
+ordenarEstudiantes(estudiantes, numEstudiantes);
+
+    archivoSalida = fopen("datos_ordenados.txt", "w");
+    if (archivoSalida == NULL) {
+        printf("No se pudo abrir el archivo de salida.\n");
+        return 1;
+    }
+
+    imprimirEstudiantes(estudiantes, numEstudiantes);
+
+    for (int i = 0; i < numEstudiantes; i++) {
+        fprintf(archivoSalida, "%s;%s;%.2f;%.2f;%.2f;%.2f\n", estudiantes[i].nombre, estudiantes[i].carrera, estudiantes[i].nota1, estudiantes[i].nota2, estudiantes[i].nota3, estudiantes[i].promedio);
+    }
+
+    fclose(archivoSalida);
+
+
+    return 0;
+}
+
+    
