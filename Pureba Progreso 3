@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define MAX_ESTUDIANTES 5
-//Definicion de Struct estudiantes, con sus respectivas variables.
+
 typedef struct {
     int codigo;
     char nombre[50];
@@ -14,29 +14,27 @@ typedef struct {
     float promedio;
 } Estudiante;
 
-//Definicion de funciones ordenar estudiantes e imprimir estudiantes.
 void ordenarEstudiantes(Estudiante estudiantes[], int numEstudiantes);
 void imprimirEstudiantes(Estudiante estudiantes[], int numEstudiantes);
 
-//Inicio del codigo.
 int main() {
-    FILE *archivoEntrada, *archivoSalida; // se llaman a dos punteros que van a utilizarse para ejecturar o imprimir los datos de un texto, entrada y salida.
-    char linea[100]; // Definicion de variable char linea con tamaño 100 para recoletar datos.
-    Estudiante estudiantes[MAX_ESTUDIANTES]; // Se define el struct con array del max de estudiantes que es 5.
+    FILE *archivoEntrada, *archivoSalida;
+    char linea[100];
+    Estudiante estudiantes[MAX_ESTUDIANTES];
     int numEstudiantes = 0;
 
-    archivoEntrada = fopen("alumnos.txt", "r"); // SE abre el archivo que descargamos en modo lectura.
-    if (archivoEntrada == NULL) { // Comprobacion para saber si el archivo se abrio de manera correcta o incorrecta.
+    archivoEntrada = fopen("alumnos.txt", "r");
+    if (archivoEntrada == NULL) {
         printf("No se pudo abrir el archivo de entrada.\n");
         return 1;
     }
-  else{
-    printf("El archivo se abrio correctamente\n");
-  }
+    else{
+        printf("El archivo se pudo abrir correctamente\n");
+    }
 
-    while (fgets(linea, sizeof(linea), archivoEntrada) != NULL) { // Funcion while para scanear espacio por espacio los datos alojados en alumnos.txt
+    while (fgets(linea, sizeof(linea), archivoEntrada) != NULL) { // bucle While para scanear 
         Estudiante estudiante;
-        fscanf(linea, "%d;%[^;];%[^;];%f;%f;%f", &estudiante.codigo, estudiante.nombre, estudiante.carrera, &estudiante.nota1, &estudiante.nota2, &estudiante.nota3);
+        sscanf(linea, "%d;%[^;];%[^;];%f;%f;%f", &estudiante.codigo, estudiante.nombre, estudiante.carrera, &estudiante.nota1, &estudiante.nota2, &estudiante.nota3);
 
         // Cálculo del promedio
         estudiante.promedio = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3.0;
@@ -44,29 +42,27 @@ int main() {
         estudiantes[numEstudiantes] = estudiante;
         numEstudiantes++;
     }
-    fclose(archivoEntrada); // Se cierra el FILE archivos de entrada.
 
-ordenarEstudiantes(estudiantes, numEstudiantes); // Se llama a la funcion ordenarEstudiantes, definida mas adelante.
+    fclose(archivoEntrada); // Cierro el puntero entrada
 
-    archivoSalida = fopen("alumnos_ordenados.txt", "w"); // Se abre el otro FILE apuntado a archivos de Salida en modo escritura.
+    ordenarEstudiantes(estudiantes, numEstudiantes); // LLamo a la funcion ordenar estudiantes.
+
+    archivoSalida = fopen("alumnos_ordenados.txt", "w"); // Definicon de fopen a puntero y pido que se abra para escritura.
     if (archivoSalida == NULL) {
-        printf("No se pudo abrir el archivo de salida.\n");  // Se comprueba que se abra de manera correcta.
+        printf("No se pudo abrir el archivo de salida.\n");
         return 1;
     }
 
-    imprimirEstudiantes(estudiantes, numEstudiantes); // Se llama la funcion impirmir Estudiantes Definida mas adelante.
-
-    for (int i = 0; i < numEstudiantes; i++) { // Bucle for encargado de impirmir los datos Estudiantes.
-        fprintf(archivoSalida, "%s;%s;%.2f;%.2f;%.2f;%.2f\n", estudiantes[i].nombre, estudiantes[i].carrera, estudiantes[i].nota1, estudiantes[i].nota2, estudiantes[i].nota3, estudiantes[i].promedio);
+    for (int i = 0; i < numEstudiantes; i++) { // Bucle for para impirmir todos los estudiantes.
+        fprintf(archivoSalida, "%d;%s;%s;%.2f;%.2f;%.2f;%.2f\n", estudiantes[i].codigo, estudiantes[i].nombre, estudiantes[i].carrera, estudiantes[i].nota1, estudiantes[i].nota2, estudiantes[i].nota3, estudiantes[i].promedio);
     }
 
-    fclose(archivoSalida); // Se cierra el FILE que apunta archivo salida.
+    fclose(archivoSalida); // Cierre de puntero archivo salida.
 
     return 0;
-} // Fin del Programa.
-
-//Definicion funcion de tipo void ordenar Estudiantes.
-//Lo que se hace en esta funcion ordenar Estudiantes es con este doble bucle for es iterar entre el numero de estudiantes con la finalidad de que en una variable temp se guarde el nuevo puesto o codigo de numero del estudiante.
+}
+//funcion para Ordenar los estudiantes de manera ascendente.
+//Lo que hago es definir variables i y j como iteradores encargadas de hacer funcionar el ciclo for, declarado una variable temp de tipo estudiante lo que hago es almacenar los datos.
 void ordenarEstudiantes(Estudiante estudiantes[], int numEstudiantes) {
     for (int i = 0; i < numEstudiantes - 1; i++) {
         for (int j = i + 1; j < numEstudiantes; j++) {
@@ -78,11 +74,10 @@ void ordenarEstudiantes(Estudiante estudiantes[], int numEstudiantes) {
         }
     }
 }
-//Definicion funcion de tipo void para impirmir Estudiantes.
+//Definicion para impirmir estudiantes.
 void imprimirEstudiantes(Estudiante estudiantes[], int numEstudiantes) {
     printf("Código\tNombre\t\tCarrera\t\tNota 1\tNota 2\tNota 3\tPromedio\n");
     for (int i = 0; i < numEstudiantes; i++) {
         printf("%d\t%s\t%s\t%.2f\t%.2f\t%.2f\t%.2f\n", estudiantes[i].codigo, estudiantes[i].nombre, estudiantes[i].carrera, estudiantes[i].nota1, estudiantes[i].nota2, estudiantes[i].nota3, estudiantes[i].promedio);
     }
 }
-    
