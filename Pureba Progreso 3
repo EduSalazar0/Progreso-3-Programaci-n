@@ -25,7 +25,7 @@ int main() {
     Estudiante estudiantes[MAX_ESTUDIANTES]; // Se define el struct con array del max de estudiantes que es 5.
     int numEstudiantes = 0;
 
-    archivoEntrada = fopen("datos.txt", "r"); // SE abre el archivo que descargamos en modo lectura.
+    archivoEntrada = fopen("alumnos.txt", "r"); // SE abre el archivo que descargamos en modo lectura.
     if (archivoEntrada == NULL) { // Comprobacion para saber si el archivo se abrio de manera correcta o incorrecta.
         printf("No se pudo abrir el archivo de entrada.\n");
         return 1;
@@ -48,7 +48,7 @@ int main() {
 
 ordenarEstudiantes(estudiantes, numEstudiantes); // Se llama a la funcion ordenarEstudiantes, definida mas adelante.
 
-    archivoSalida = fopen("datos_ordenados.txt", "w"); // Se abre el otro FILE apuntado a archivos de Salida en modo escritura.
+    archivoSalida = fopen("alumnos_ordenados.txt", "w"); // Se abre el otro FILE apuntado a archivos de Salida en modo escritura.
     if (archivoSalida == NULL) {
         printf("No se pudo abrir el archivo de salida.\n");  // Se comprueba que se abra de manera correcta.
         return 1;
@@ -78,6 +78,11 @@ void ordenarEstudiantes(Estudiante estudiantes[], int numEstudiantes) {
         }
     }
 }
-
-
+//Definicion funcion de tipo void para impirmir Estudiantes.
+void imprimirEstudiantes(Estudiante estudiantes[], int numEstudiantes) {
+    printf("Código\tNombre\t\tCarrera\t\tNota 1\tNota 2\tNota 3\tPromedio\n");
+    for (int i = 0; i < numEstudiantes; i++) {
+        printf("%d\t%s\t%s\t%.2f\t%.2f\t%.2f\t%.2f\n", estudiantes[i].codigo, estudiantes[i].nombre, estudiantes[i].carrera, estudiantes[i].nota1, estudiantes[i].nota2, estudiantes[i].nota3, estudiantes[i].promedio);
+    }
+}
     
