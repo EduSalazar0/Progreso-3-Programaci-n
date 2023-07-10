@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_ESTUDIANTES 5
+
+typedef struct {
+    int codigo;
+    char nombre[50];
+    char carrera[50];
+    float nota1;
+    float nota2;
+    float nota3;
+    float promedio;
+} Estudiante;
+//Definicion de funciones ordenar estudiantes e imprimir estudiantes.
+void ordenarEstudiantes(Estudiante estudiantes[], int numEstudiantes);
+void imprimirEstudiantes(Estudiante estudiantes[], int numEstudiantes);
+
+int main() {
+    FILE *archivoEntrada, *archivoSalida;
+    char linea[100];
+    Estudiante estudiantes[MAX_ESTUDIANTES];
+    int numEstudiantes = 0;
+
+    archivoEntrada = fopen("datos.txt", "r");
+    if (archivoEntrada == NULL) {
+        printf("No se pudo abrir el archivo de entrada.\n");
+        return 1;
+    }
+  else{
+    printf("El archivo se abrio correctamente\n");
+  }
+
+    while (fgets(linea, sizeof(linea), archivoEntrada) != NULL) {
+        Estudiante estudiante;
+        fscanf(linea, "%d;%[^;];%[^;];%f;%f;%f", &estudiante.codigo, estudiante.nombre, estudiante.carrera, &estudiante.nota1, &estudiante.nota2, &estudiante.nota3);
+
+        // Cálculo del promedio
+        estudiante.promedio = (estudiante.nota1 + estudiante.nota2 + estudiante.nota3) / 3.0;
+
+        estudiantes[numEstudiantes] = estudiante;
+        numEstudiantes++;
+    }
